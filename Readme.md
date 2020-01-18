@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Aleks Balev](https://up.htmlacademy.ru/javascript/19/user/605603).
-* Наставник: `Неизвестно`.
+* Наставник: `Роман Духницький` (https://htmlacademy.ru/profile/id59884).
 
 ---
 
