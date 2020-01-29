@@ -14,20 +14,26 @@ var messages = [
 ];
 var descriptions = ['Ставьте лайк', 'Подписывайтесь', 'Хорошего всем дня!', 'Меня трудной найти, еще труднее удержать и легко потерять'];
 
+var generateNumberFromTo = function (max, min) {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+var generateNumberArray = function (array) {
+  return Math.floor(Math.random() * array.length);
+};
+
 var userGenerator = function (name, message, description) {
   var users = [];
 
-  for (var i = 0; i < 25; i++) {
-    var url = 'photos/{{i}}.jpg';
-    var avatar = 'img/avatar-{{}}.svg';
+  for (var i = 1; i <= 25; i++) {
     users[i] = {
-      url: url.replace('{{i}}', i + 1),
-      description: description[Math.floor(Math.random() * description.length)],
-      likes: Math.floor(Math.random() * (200 - 15) + 15),
+      url: 'photos/' + i + '.jpg',
+      description: description[generateNumberArray(description)],
+      likes: generateNumberFromTo(200, 15),
       comments: {
-        avatar: avatar.replace('{{}}', Math.floor(Math.random() * (6 - 1) + 1)),
-        message: message[Math.floor(Math.random() * message.length)],
-        name: name[Math.floor(Math.random() * name.length)]
+        avatar: 'img/avatar-' + generateNumberFromTo(6, 1) + '.svg',
+        message: message[generateNumberArray(message)],
+        name: name[generateNumberArray(name)]
       }
     };
   }
