@@ -22,46 +22,55 @@ var generateNumberFromTo = function (max, min) {
 
 /* Функция выбора случайного элемента из массива */
 var generateNumberArray = function (array) {
-  return Math.floor(Math.random() * array.length);
+  return array[Math.floor(Math.random() * array.length)];
 };
 
 /* Функция создания массива комментария + Переменная --- НАЧАЛО */
-var generateComments = function (name, message, count) {
+var generateComments = function (count) {
   var localComments = [];
+
+  var generateMessage = function (messageCounter) {
+    var sentences = [];
+
+    for (var y = 0; y < messageCounter; y++) {
+      sentences.push(generateNumberArray(messages));
+    }
+
+    return sentences.join(' ');
+  };
 
   for (var i = 0; i < count; i++) {
     localComments.push({
       avatar: 'img/avatar-' + generateNumberFromTo(7, 1) + '.svg',
-      message: message[generateNumberArray(message)],
-      name: name[generateNumberArray(name)]
+      message: generateMessage(generateNumberFromTo(3, 1)),
+      name: generateNumberArray(names)
     });
   }
 
   return localComments;
 };
-
-var comments = generateComments(names, messages, usersCount);
 /* Функция создания массива комментария --- КОНЕЦ */
 
 /* Функция создания массива пользователей + Переменная --- НАЧАЛО */
-var generateUser = function (description, comment, count) {
+var generateUser = function (description, count) {
   var localUser = [];
 
   for (var i = 1; i <= count; i++) {
     localUser.push({
       url: 'photos/' + i + '.jpg',
-      description: description[generateNumberArray(description)],
+      description: generateNumberArray(description),
       likes: generateNumberFromTo(200, 15),
-      comments: [comment[generateNumberArray(comment)], comment[generateNumberArray(comment)]]
+      comments: generateComments(generateNumberFromTo(6, 1))
     });
   }
 
   return localUser;
 };
 
-var users = generateUser(descriptions, comments, usersCount);
-/* Функция создания массива пользователей + Переменная --- КОНЕЦ */
+var users = generateUser(descriptions, usersCount);
 
+
+/* Функция создания массива пользователей + Переменная --- КОНЕЦ */
 
 /* Функция которая вставляет информацию из массива объектов 'users' */
 var renderUser = function (user) {
@@ -74,7 +83,6 @@ var renderUser = function (user) {
   return userElement;
 };
 
-
 /* Переменная и цикл отвечающие за отрисовку сгенерированного DOM-элемента в блок .pictures */
 var fragment = document.createDocumentFragment();
 
@@ -83,4 +91,4 @@ for (var i = 0; i < users.length; i++) {
 }
 /* Переменная и цикл отвечающие за отрисовку сгенерированного DOM-элемента в блок .pictures */
 
-console.log(fragment);
+document.querySelector('.pictures').appendChild(fragment);
