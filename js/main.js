@@ -1,5 +1,8 @@
 'use strict';
 
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
+
 var usersCount = 25;
 
 var names = ['Вася', 'Галя', 'Толя', 'Варфаламей', 'Никита', 'Саня'];
@@ -69,7 +72,6 @@ var generateUser = function (description, count) {
 
 var users = generateUser(descriptions, usersCount);
 
-
 /* Функция создания массива пользователей + Переменная --- КОНЕЦ */
 
 /* Функция которая вставляет информацию из массива объектов 'users' */
@@ -92,3 +94,115 @@ for (var i = 0; i < users.length; i++) {
 /* Переменная и цикл отвечающие за отрисовку сгенерированного DOM-элемента в блок .pictures */
 
 document.querySelector('.pictures').appendChild(fragment);
+
+/* Блок кода отвечающий за открытие и закрытие редактора фотографии */
+var editor = document.querySelector('.img-upload__overlay');
+var editorOpen = document.querySelector('#upload-file');
+var editorClose = editor.querySelector('#upload-cancel');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    closePopup();
+  }
+};
+
+editorOpen.addEventListener('change', function () {
+  openPopup();
+  document.body.classList.add('modal-open');
+});
+
+var openPopup = function () {
+  editor.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  if (hashtagsInput !== document.activeElement) {
+    editor.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
+    document.body.classList.remove('modal-open');
+    editorOpen.value = null;
+  }
+};
+
+editorClose.addEventListener('click', function () {
+  closePopup();
+});
+/* Блок кода отвечающий за открытие и закрытие редактора фотографии */
+
+/* Блок кода отвечающий за переключение эффектов картинки */
+var imgPreview = document.querySelector('.img-upload__preview');
+var effectTriggers = editor.querySelectorAll("[name='effect']");
+var currentEffect = 'none';
+
+imgPreview.classList.add('effects__preview--none');
+
+for (var i = 0; i < effectTriggers.length; i++) {
+  effectTriggers[i].addEventListener('change', function (evt) {
+    var classPrefix = 'effects__preview--';
+    var newClass = classPrefix + evt.target.value;
+
+    if (imgPreview.classList.length) {
+      imgPreview.classList.remove(classPrefix + currentEffect);
+    }
+    currentEffect = evt.target.value;
+    imgPreview.classList.add(newClass);
+  });
+}
+/* Блок кода отвечающий за переключение эффектов картинки */
+
+
+var effectLevelPin = editor.querySelector('.effect-level__pin');
+
+effectLevelPin.addEventListener('mouseup', function (evt) {});
+
+
+
+var hashtagsInput = editor.querySelector('.text__hashtags');
+
+var validateHashtags = function (value) {
+  var splitHashtags = value.split(' ');
+  var isValid = true;
+  var duplicate = false;
+
+  for (var i = 0; i < splitHashtags.length; i++) {
+    if (!(/(^|\s)(#[а-яa-z\d]+)/gi.test(splitHashtags[i]))) {
+      isValid = false;
+    } else if (splitHashtags[i].length < 2 || splitHashtags[i].length > 20) {
+      isValid = false;
+    } else if (splitHashtags[i] === splitHashtags[i - 1] || splitHashtags[i] === splitHashtags[i - 2] || splitHashtags[i] === splitHashtags[i - 3] || splitHashtags[i] === splitHashtags[i - 4]) {
+      duplicate = true;
+      if (duplicate === true) {
+        isValid = false;
+      }
+    } else if (splitHashtags.length > 5) {
+      isValid = false;
+    }
+  }
+
+  return isValid;
+};
+
+hashtagsInput.addEventListener('input', function () {
+  if (hashtagsInput.value !== '') {
+    if (validateHashtags(hashtagsInput.value) === false) {
+      hashtagsInput.setCustomValidity(
+        '1. Хэш-тег должен начинаться со знака "#" 2. Хэш-тег должен содержать буквы только латиского и русского алфавитов 3. Хэш-тег не может состоять только из одной решётки 4. Хэш-теги разделяются пробелами 5. Нельзя указать больше пяти хэш-тегов 6. Максимальная длина одного хэш-тега 20 символов, включая решётку'
+      );
+    } else {
+      hashtagsInput.setCustomValidity('')
+    }
+  }
+});
+
+// var charMatch = /(^|\s)(#[а-яa-z\d]+)/ig;
+
+// var hashttagsValidate = function (hashtag) {
+//   if (charMatch.test(hashtag)) {
+//     console.log('yes');
+//   } else {
+//     console.log('no');
+//   }
+// }
+
+// console.log(hashttagsValidate('#Хксвffff123123цв'))
