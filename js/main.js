@@ -1,7 +1,6 @@
 'use strict';
 
 var ESC_KEY = 'Escape';
-var ENTER_KEY = 'Enter';
 
 var usersCount = 25;
 
@@ -132,13 +131,13 @@ editorClose.addEventListener('click', function () {
 
 /* Блок кода отвечающий за переключение эффектов картинки */
 var imgPreview = document.querySelector('.img-upload__preview');
-var effectTriggers = editor.querySelectorAll("[name='effect']");
+var effectTriggers = editor.querySelectorAll('[name=\'effect\']');
 var currentEffect = 'none';
 
 imgPreview.classList.add('effects__preview--none');
 
-for (var i = 0; i < effectTriggers.length; i++) {
-  effectTriggers[i].addEventListener('change', function (evt) {
+for (var y = 0; y < effectTriggers.length; y++) {
+  effectTriggers[y].addEventListener('change', function (evt) {
     var classPrefix = 'effects__preview--';
     var newClass = classPrefix + evt.target.value;
 
@@ -151,12 +150,9 @@ for (var i = 0; i < effectTriggers.length; i++) {
 }
 /* Блок кода отвечающий за переключение эффектов картинки */
 
-
 var effectLevelPin = editor.querySelector('.effect-level__pin');
 
-effectLevelPin.addEventListener('mouseup', function (evt) {});
-
-
+effectLevelPin.addEventListener('mouseup', function () {});
 
 var hashtagsInput = editor.querySelector('.text__hashtags');
 
@@ -165,12 +161,17 @@ var validateHashtags = function (value) {
   var isValid = true;
   var duplicate = false;
 
-  for (var i = 0; i < splitHashtags.length; i++) {
-    if (!(/(^|\s)(#[а-яa-z\d]+)/gi.test(splitHashtags[i]))) {
+  for (var x = 0; x < splitHashtags.length; x++) {
+    if (!/(^|\s)(#[а-яa-z\d]+)/gi.test(splitHashtags[x])) {
       isValid = false;
-    } else if (splitHashtags[i].length < 2 || splitHashtags[i].length > 20) {
+    } else if (splitHashtags[x].length < 2 || splitHashtags[x].length > 20) {
       isValid = false;
-    } else if (splitHashtags[i] === splitHashtags[i - 1] || splitHashtags[i] === splitHashtags[i - 2] || splitHashtags[i] === splitHashtags[i - 3] || splitHashtags[i] === splitHashtags[i - 4]) {
+    } else if (
+      splitHashtags[x] === splitHashtags[x - 1] ||
+      splitHashtags[x] === splitHashtags[x - 2] ||
+      splitHashtags[x] === splitHashtags[x - 3] ||
+      splitHashtags[x] === splitHashtags[x - 4]
+    ) {
       duplicate = true;
       if (duplicate === true) {
         isValid = false;
@@ -187,22 +188,10 @@ hashtagsInput.addEventListener('input', function () {
   if (hashtagsInput.value !== '') {
     if (validateHashtags(hashtagsInput.value) === false) {
       hashtagsInput.setCustomValidity(
-        '1. Хэш-тег должен начинаться со знака "#" 2. Хэш-тег должен содержать буквы только латиского и русского алфавитов 3. Хэш-тег не может состоять только из одной решётки 4. Хэш-теги разделяются пробелами 5. Нельзя указать больше пяти хэш-тегов 6. Максимальная длина одного хэш-тега 20 символов, включая решётку'
+          '1. Хэш-тег должен начинаться со знака "#" 2. Хэш-тег должен содержать буквы только латиского и русского алфавитов 3. Хэш-тег не может состоять только из одной решётки 4. Хэш-теги разделяются пробелами 5. Нельзя указать больше пяти хэш-тегов 6. Максимальная длина одного хэш-тега 20 символов, включая решётку'
       );
     } else {
-      hashtagsInput.setCustomValidity('')
+      hashtagsInput.setCustomValidity('');
     }
   }
 });
-
-// var charMatch = /(^|\s)(#[а-яa-z\d]+)/ig;
-
-// var hashttagsValidate = function (hashtag) {
-//   if (charMatch.test(hashtag)) {
-//     console.log('yes');
-//   } else {
-//     console.log('no');
-//   }
-// }
-
-// console.log(hashttagsValidate('#Хксвffff123123цв'))
