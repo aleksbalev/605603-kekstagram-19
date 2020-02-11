@@ -190,5 +190,7 @@ hashtagsInput.addEventListener('input', function () {
     } else {
       hashtagsInput.setCustomValidity('');
     }
+  } else {
+    hashtagsInput.setCustomValidity('');
   }
 });
