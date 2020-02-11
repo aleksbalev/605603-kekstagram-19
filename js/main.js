@@ -157,12 +157,12 @@ effectLevelPin.addEventListener('mouseup', function () {});
 var hashtagsInput = editor.querySelector('.text__hashtags');
 
 var validateHashtags = function (value) {
+  value = value.replace(/\s\s+/g, ' ').toLowerCase();
   var splitHashtags = value.split(' ');
   var isValid = true;
-  var duplicate = false;
 
   for (var x = 0; x < splitHashtags.length; x++) {
-    if (!/(^|\s)(#[а-яa-z\d]+)/gi.test(splitHashtags[x])) {
+    if (!(/(^|\s)(#[а-яa-z\d]+)($|\s)/ig).test(splitHashtags[x])) {
       isValid = false;
     } else if (splitHashtags[x].length < 2 || splitHashtags[x].length > 20) {
       isValid = false;
@@ -172,10 +172,7 @@ var validateHashtags = function (value) {
       splitHashtags[x] === splitHashtags[x - 3] ||
       splitHashtags[x] === splitHashtags[x - 4]
     ) {
-      duplicate = true;
-      if (duplicate === true) {
-        isValid = false;
-      }
+      isValid = false;
     } else if (splitHashtags.length > 5) {
       isValid = false;
     }
