@@ -3,6 +3,8 @@
 (function () {
   var ESC_KEY = 'Escape';
 
+  var usersCount = 25;
+
   var editor = document.querySelector('.img-upload__overlay');
 
   var hashtagsInput = editor.querySelector('.text__hashtags');
@@ -22,6 +24,7 @@
     editor: editor,
     hashtagsInput: hashtagsInput,
     generateNumberFromTo: generateNumberFromTo,
-    generateNumberArray: generateNumberArray
+    generateNumberArray: generateNumberArray,
+    usersCount: usersCount,
   };
 })();
