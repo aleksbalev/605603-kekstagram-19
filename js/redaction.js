@@ -5,10 +5,12 @@
   var imgPreview = document.querySelector('.img-upload__preview');
   var effectTriggers = document.querySelectorAll('[name=\'effect\']');
   var currentEffect = 'none';
+  var effectLevel = document.querySelector('.effect-level');
 
   imgPreview.classList.add('effects__preview--none');
 
   for (var y = 0; y < effectTriggers.length; y++) {
+    effectLevel.style.display = 'none';
     effectTriggers[y].addEventListener('change', function (evt) {
       var classPrefix = 'effects__preview--';
       var newClass = classPrefix + evt.target.value;
@@ -18,6 +20,12 @@
       }
       currentEffect = evt.target.value;
       imgPreview.classList.add(newClass);
+
+      if (currentEffect !== 'none') {
+        effectLevel.style.display = '';
+      } else {
+        effectLevel.style.display = 'none';
+      }
     });
   }
   /* Блок кода отвечающий за переключение эффектов картинки */
@@ -31,10 +39,10 @@
       x: evt.clientX,
     };
 
-    var dragged = false;
+    // var dragged = false;
 
     var onMouseMove = function (moveEvt) {
-      dragged = true;
+      // dragged = true;
 
       var shift = {
         x: startCoords.x - moveEvt.clientX

@@ -3,7 +3,7 @@
 (function () {
   var ESC_KEY = window.utils.ESC_KEY;
   var usersCount = window.utils.usersCount;
-  var ENTER_KEY = 'Enter';
+  var MAX_BASE_COMMENTS = 5;
 
   var bigPicture = document.querySelector('.big-picture');
   var closePictureButton = bigPicture.querySelector('#picture-cancel');
@@ -15,8 +15,12 @@
   var description = bigPicture.querySelector('.social__caption');
   var socailComments = bigPicture.querySelector('.social__comments');
   var socialComment = bigPicture.querySelector('.social__comment');
+  var socialCommentsCount = bigPicture.querySelector('.social__comment-count');
   var commentsCount = bigPicture.querySelector('.comments-count');
   var commentsLoader = bigPicture.querySelector('.comments-loader');
+  var commentsShown = MAX_BASE_COMMENTS;
+
+  var comments = [];
 
   var onPopupEscPress = function (evt) {
     if (evt.key === ESC_KEY) {
@@ -24,41 +28,56 @@
     }
   };
 
+  var onCommentsLoaderClick = function () {
+    renderComments(comments.slice(commentsShown, commentsShown + MAX_BASE_COMMENTS));
+    commentsShown += MAX_BASE_COMMENTS;
+
+    if (commentsShown >= comments.length) {
+      commentsShown -= commentsShown % comments.length;
+      commentsLoader.classList.add('hidden');
+    }
+
+    socialCommentsCount.textContent = commentsShown + ' из ' + comments.length + ' комментариев';
+  };
+
+
   var setEventOnPictures = function () {
     var pictures = document.querySelectorAll('.picture');
-    var maxBaseComments = 5;
 
     for (var i = 0; i < usersCount; i++) {
       pictures[i].addEventListener('click', function (evt) {
-        document.querySelector('.big-picture').classList.remove('hidden');
+        commentsLoader.addEventListener('click', onCommentsLoaderClick);
+
+        bigPicture.classList.remove('hidden');
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', onPopupEscPress);
 
         var index = evt.target.parentElement.getAttribute('data-index');
         var picturesIndex = window.data.pictures[index];
+        comments = picturesIndex.comments;
 
-        if (picturesIndex.comments.length <= maxBaseComments) {
-          commentsLoader.style.display = 'none';
+        if (comments.length <= MAX_BASE_COMMENTS) {
+          commentsLoader.classList.add('hidden');
         }
 
-        commentsCount.textContent = picturesIndex.comments.length;
+        socialCommentsCount.textContent = MAX_BASE_COMMENTS + ' из ' + comments.length + ' комментариев';
         bigImage.src = picturesIndex.url;
         likes.textContent = picturesIndex.likes;
         description.textContent = picturesIndex.description;
         socailComments.innerHTML = '';
-        for (var y = 0; y < maxBaseComments; y++) {
-          socailComments.appendChild(renderComment(picturesIndex.comments[y]));
-        }
-      });
+        renderComments(comments.slice(0, MAX_BASE_COMMENTS));
 
-      pictures[i].addEventListener('keydown', function (evt) {
-        if (evt.key === ENTER_KEY) {
-          document.querySelector('.big-picture').classList.remove('hidden');
-          document.body.classList.add('modal-open');
-          document.addEventListener('keydown', onPopupEscPress);
+        if (comments.length <= MAX_BASE_COMMENTS) {
+          socialCommentsCount.textContent = comments.length + ' из ' + comments.length + ' комментариев';
         }
       });
     }
+  };
+
+  var renderComments = function (commentsData) {
+    commentsData.forEach(function (value) {
+      socailComments.appendChild(renderComment(value));
+    });
   };
 
   var renderComment = function (commentData) {
@@ -70,13 +89,15 @@
 
     return commentElement;
   };
-
   var closePicture = function () {
     if (pictureInput !== document.activeElement) {
+      commentsCount.textContent = comments.length;
       bigPicture.classList.add('hidden');
       document.removeEventListener('keydown', onPopupEscPress);
       document.body.classList.remove('modal-open');
-      commentsLoader.style.display = '';
+      commentsLoader.classList.remove('hidden');
+      commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+      commentsShown = MAX_BASE_COMMENTS;
     }
   };
 
