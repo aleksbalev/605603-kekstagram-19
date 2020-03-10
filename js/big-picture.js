@@ -2,8 +2,9 @@
 
 (function () {
   var ESC_KEY = window.utils.ESC_KEY;
-  var usersCount = window.utils.usersCount;
   var MAX_BASE_COMMENTS = 5;
+
+  var usersCount = window.utils.usersCount;
 
   var bigPicture = document.querySelector('.big-picture');
   var closePictureButton = bigPicture.querySelector('#picture-cancel');
