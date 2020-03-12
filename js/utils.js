@@ -8,6 +8,7 @@
   var editor = document.querySelector('.img-upload__overlay');
 
   var hashtagsInput = editor.querySelector('.text__hashtags');
+  var commentTextarea = editor.querySelector('.text__description');
 
   /* Генератор случайных чисел От - До */
   var generateNumberFromTo = function (max, min) {
@@ -23,6 +24,7 @@
     ESC_KEY: ESC_KEY,
     editor: editor,
     hashtagsInput: hashtagsInput,
+    commentTextarea: commentTextarea,
     generateNumberFromTo: generateNumberFromTo,
     generateNumberArray: generateNumberArray,
     usersCount: usersCount,

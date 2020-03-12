@@ -2,6 +2,9 @@
 
 (function () {
   var hashtagsInput = window.utils.hashtagsInput;
+  var commentTextarea = window.utils.commentTextarea;
+
+  commentTextarea.setAttribute('maxlength', '140');
 
   var validateHashtags = function (value) {
     value = value.replace(/\s\s+/g, ' ').toLowerCase();

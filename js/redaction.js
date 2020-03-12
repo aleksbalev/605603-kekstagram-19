@@ -1,7 +1,38 @@
 'use strict';
 
 (function () {
+  /* Блок кода отвечающий за увеличение и уменьшение картинки */
   var LINE_LENGTH = 453;
+  var SCALE_NUMBER = 25;
+  var MAX_SCALE = 100;
+  var editor = window.utils.editor;
+
+  var scaleControlSmaller = editor.querySelector('.scale__control--smaller');
+  var scaleControlBigger = editor.querySelector('.scale__control--bigger');
+  var scaleControllValue = editor.querySelector('.scale__control--value');
+
+  scaleControlSmaller.addEventListener('click', function () {
+    if ((parseFloat(scaleControllValue.value)) > SCALE_NUMBER) {
+      scaleControllValue.value = parseFloat(scaleControllValue.value) - SCALE_NUMBER + '%';
+    }
+    setImageScale(parseFloat(scaleControllValue.value));
+  });
+
+  scaleControlBigger.addEventListener('click', function () {
+    if ((parseFloat(scaleControllValue.value)) < MAX_SCALE) {
+      scaleControllValue.value = parseFloat(scaleControllValue.value) + SCALE_NUMBER + '%';
+    }
+    setImageScale(parseFloat(scaleControllValue.value));
+  });
+
+  var setScale = function (scaleMethod) {
+    imgPreview.style.transform = scaleMethod;
+  };
+
+  var setImageScale = function (imageScale) {
+    setScale('scale(' + imageScale / 100 + ')');
+  };
+  /* Блок кода отвечающий за увеличение и уменьшение картинки */
 
   /* Блок кода отвечающий за переключение эффектов картинки */
   var imgPreview = document.querySelector('.img-upload__preview');
@@ -17,6 +48,7 @@
       var classPrefix = 'effects__preview--';
       var newClass = classPrefix + evt.target.value;
       onPin.style.left = 100 + '%';
+      lineDepth.style.width = 100 + '%';
 
       if (imgPreview.classList.length) {
         imgPreview.classList.remove(classPrefix + currentEffect);
@@ -32,11 +64,12 @@
       }
     });
   }
-
   /* Блок кода отвечающий за переключение эффектов картинки */
 
+  /* Блок кода отвечающий за перемещение ползунка и настройку насыщенности */
   var range = document.querySelector('.effect-level__line');
   var onPin = range.querySelector('.effect-level__pin');
+  var lineDepth = range.querySelector('.effect-level__depth');
 
   var checkFilter = function (filter) {
     return imgPreview.classList.contains(filter);
@@ -95,6 +128,7 @@
 
       if (newLeft > 0 && newLeft <= LINE_LENGTH) {
         onPin.style.left = onPin.offsetLeft - shift.x + 'px';
+        lineDepth.style.width = proportion + '%';
       }
 
       setFilterChange(proportion);
@@ -112,4 +146,5 @@
   window.redaction = {
     setFilterStyle: setFilterStyle
   };
+  /* Блок кода отвечающий за перемещение ползунка и настройку насыщенности */
 })();
