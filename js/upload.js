@@ -10,8 +10,15 @@
 
   var onEscPress = function (evt) {
     if (evt.key === ESC_KEY) {
-      closeSuccessNotification();
-      closeErrorNotification();
+      var successSection = document.querySelector('.success');
+      var errorSection = document.querySelector('.error');
+
+      if (successSection) {
+        closeNotification(successSection, 'success');
+      } else if (errorSection) {
+        closeNotification(errorSection, 'error');
+      }
+      document.removeEventListener('keydown', onEscPress);
     }
   };
 
@@ -20,16 +27,9 @@
     main.appendChild(clonTemplate);
   };
 
-  var closeSuccessNotification = function () {
-    var successSection = document.querySelector('.success');
-    main.removeChild(successSection);
-    document.removeEventListener('keydown', onEscPress);
-  };
-
-  var closeErrorNotification = function () {
-    var errorSection = document.querySelector('.error');
-    main.removeChild(errorSection);
-    document.removeEventListener('keydown', onEscPress);
+  var closeNotification = function (elemSection, elem) {
+    elemSection = document.querySelector('.' + elem);
+    main.removeChild(elemSection);
   };
 
   var uploadForm = function (data, onSuccess, onError) {
@@ -41,17 +41,19 @@
         onSuccess(xhr.response);
         showNotification(successTemplate);
         var successButton = document.querySelector('.success__button');
+        var successSection = document.querySelector('.success');
         document.addEventListener('keydown', onEscPress);
         successButton.addEventListener('click', function () {
-          closeSuccessNotification();
+          closeNotification(successSection, 'success');
         });
       } else {
         onError(xhr.response);
         showNotification(errorTemplate);
         var errorButton = document.querySelector('.error__button');
+        var errorSection = document.querySelector('.error');
         document.addEventListener('keydown', onEscPress);
         errorButton.addEventListener('click', function () {
-          closeErrorNotification();
+          closeNotification(errorSection, 'error');
         });
       }
     });
@@ -62,6 +64,5 @@
 
   window.upload = {
     uploadForm: uploadForm,
-    main: main
   };
 })();

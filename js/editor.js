@@ -59,11 +59,5 @@
   editorClose.addEventListener('click', function () {
     closePopup();
   });
-
-  // var closeNotification = function (notificationType) {
-  //   notificationType.addEventListener('click', function () {
-  //     main.removeChild('');
-  //   });
-  // };
 })();
 /* Блок кода отвечающий за открытие и закрытие редактора фотографии */

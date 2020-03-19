@@ -5,15 +5,15 @@
 
   /* Переменная и цикл отвечающие за отрисовку сгенерированного DOM-элемента в блок .pictures */
   var onLoad = function (users) {
-    var fragment = document.createDocumentFragment();
-
     for (var i = 0; i < usersCount; i++) {
-      fragment.appendChild(renderUser(users[i], i));
       window.data.pictures.push(users[i]);
     }
-    document.querySelector('.pictures').appendChild(fragment);
+
+    renderUsers(users, usersCount);
 
     window.bigPicture.setEventOnPictures();
+
+    document.dispatchEvent(new Event('galleryRendered'));
   };
 
   window.loadGallery.load(onLoad);
@@ -31,5 +31,18 @@
     userElement.setAttribute('data-index', i);
 
     return userElement;
+  };
+
+  var renderUsers = function (users, count) {
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < count; i++) {
+      fragment.appendChild(renderUser(users[i], i));
+    }
+    document.querySelector('.pictures').appendChild(fragment);
+  };
+
+  window.gallery = {
+    renderUsers: renderUsers
   };
 })();
