@@ -107,6 +107,7 @@
   });
 
   window.bigPicture = {
-    setEventOnPictures: setEventOnPictures
+    setEventOnPictures: setEventOnPictures,
+    closePicture: closePicture
   };
 })();

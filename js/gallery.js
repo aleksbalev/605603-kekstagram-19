@@ -22,13 +22,13 @@
   /* Функция которая вставляет информацию из массива объектов 'users' */
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-  var renderUser = function (user, i) {
+  var renderUser = function (user) {
     var userElement = pictureTemplate.cloneNode(true);
 
     userElement.querySelector('.picture__img').src = user.url;
     userElement.querySelector('.picture__likes').textContent = user.likes;
     userElement.querySelector('.picture__comments').textContent = user.comments.length;
-    userElement.setAttribute('data-index', i);
+    userElement.setAttribute('data-index', (user.url.match(/\d+/)[0]) - 1);
 
     return userElement;
   };
@@ -37,7 +37,7 @@
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < count; i++) {
-      fragment.appendChild(renderUser(users[i], i));
+      fragment.appendChild(renderUser(users[i]));
     }
     document.querySelector('.pictures').appendChild(fragment);
   };

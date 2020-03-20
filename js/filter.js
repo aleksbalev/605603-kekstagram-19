@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var usersCount = window.utils.usersCount;
   var RANDOM_PICTURES_COUNT = 10;
+
+  var usersCount = window.utils.usersCount;
 
   var imageFilters = document.querySelector('.img-filters');
 
@@ -47,6 +48,8 @@
       }
 
       window.gallery.renderUsers(mergedArrPictures, RANDOM_PICTURES_COUNT);
+
+      window.bigPicture.setEventOnPictures();
     }, 500);
   };
 
@@ -61,6 +64,8 @@
       var picturesArrCopy = window.data.pictures.slice();
 
       window.gallery.renderUsers(picturesArrCopy, usersCount);
+
+      window.bigPicture.setEventOnPictures();
     }, 500);
   };
 
@@ -82,6 +87,8 @@
       });
 
       window.gallery.renderUsers(picturesArrCopy, usersCount);
+
+      window.bigPicture.setEventOnPictures();
     }, 500);
   };
 })();
