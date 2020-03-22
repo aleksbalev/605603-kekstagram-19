@@ -3,7 +3,7 @@
 (function () {
   var RANDOM_PICTURES_COUNT = 10;
 
-  var usersCount = window.utils.usersCount;
+  var USERS_COUNT = window.utils.USERS_COUNT;
 
   var imageFilters = document.querySelector('.img-filters');
 
@@ -38,11 +38,11 @@
 
     setTimeout(function () {
       removePictures();
-      var picturesArrCopy = window.data.pictures.slice();
+      var picturesArrCopy = window.utils.pictures.slice();
       var randomPictures = [];
 
       for (var i = 0; i < RANDOM_PICTURES_COUNT; i++) {
-        var removedElements = picturesArrCopy.splice(Math.random() * (usersCount - i), 1);
+        var removedElements = picturesArrCopy.splice(Math.random() * (USERS_COUNT - i), 1);
         randomPictures.splice(0, 0, removedElements);
         var mergedArrPictures = [].concat.apply([], randomPictures);
       }
@@ -61,9 +61,9 @@
 
     setTimeout(function () {
       removePictures();
-      var picturesArrCopy = window.data.pictures.slice();
+      var picturesArrCopy = window.utils.pictures.slice();
 
-      window.gallery.renderUsers(picturesArrCopy, usersCount);
+      window.gallery.renderUsers(picturesArrCopy, USERS_COUNT);
 
       window.bigPicture.setEventOnPictures();
     }, 500);
@@ -77,7 +77,7 @@
 
     setTimeout(function () {
       removePictures();
-      var picturesArrCopy = window.data.pictures.slice();
+      var picturesArrCopy = window.utils.pictures.slice();
 
       picturesArrCopy.sort(function (a, b) {
         var commentsA = a.comments.length;
@@ -86,7 +86,7 @@
         return commentsB - commentsA;
       });
 
-      window.gallery.renderUsers(picturesArrCopy, usersCount);
+      window.gallery.renderUsers(picturesArrCopy, USERS_COUNT);
 
       window.bigPicture.setEventOnPictures();
     }, 500);

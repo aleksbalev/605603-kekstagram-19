@@ -9,20 +9,20 @@
 
   var scaleControlSmaller = editor.querySelector('.scale__control--smaller');
   var scaleControlBigger = editor.querySelector('.scale__control--bigger');
-  var scaleControllValue = editor.querySelector('.scale__control--value');
+  var scaleControlValue = editor.querySelector('.scale__control--value');
 
   scaleControlSmaller.addEventListener('click', function () {
-    if ((parseFloat(scaleControllValue.value)) > SCALE_NUMBER) {
-      scaleControllValue.value = parseFloat(scaleControllValue.value) - SCALE_NUMBER + '%';
+    if ((parseFloat(scaleControlValue.value)) > SCALE_NUMBER) {
+      scaleControlValue.value = parseFloat(scaleControlValue.value) - SCALE_NUMBER + '%';
     }
-    setImageScale(parseFloat(scaleControllValue.value));
+    setImageScale(parseFloat(scaleControlValue.value));
   });
 
   scaleControlBigger.addEventListener('click', function () {
-    if ((parseFloat(scaleControllValue.value)) < MAX_SCALE) {
-      scaleControllValue.value = parseFloat(scaleControllValue.value) + SCALE_NUMBER + '%';
+    if ((parseFloat(scaleControlValue.value)) < MAX_SCALE) {
+      scaleControlValue.value = parseFloat(scaleControlValue.value) + SCALE_NUMBER + '%';
     }
-    setImageScale(parseFloat(scaleControllValue.value));
+    setImageScale(parseFloat(scaleControlValue.value));
   });
 
   var setScale = function (scaleMethod) {
@@ -42,9 +42,9 @@
 
   imgPreview.classList.add('effects__preview--none');
 
-  for (var y = 0; y < effectTriggers.length; y++) {
+  for (var i = 0; i < effectTriggers.length; i++) {
     effectLevel.style.display = 'none';
-    effectTriggers[y].addEventListener('change', function (evt) {
+    effectTriggers[i].addEventListener('change', function (evt) {
       var classPrefix = 'effects__preview--';
       var newClass = classPrefix + evt.target.value;
       onPin.style.left = 100 + '%';

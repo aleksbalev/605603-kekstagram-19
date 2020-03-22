@@ -1,15 +1,15 @@
 'use strict';
 
 (function () {
-  var usersCount = window.utils.usersCount;
+  var USERS_COUNT = window.utils.USERS_COUNT;
 
   /* Переменная и цикл отвечающие за отрисовку сгенерированного DOM-элемента в блок .pictures */
   var onLoad = function (users) {
-    for (var i = 0; i < usersCount; i++) {
-      window.data.pictures.push(users[i]);
+    for (var i = 0; i < USERS_COUNT; i++) {
+      window.utils.pictures.push(users[i]);
     }
 
-    renderUsers(users, usersCount);
+    renderUsers(users, USERS_COUNT);
 
     window.bigPicture.setEventOnPictures();
 

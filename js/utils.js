@@ -3,7 +3,7 @@
 (function () {
   var ESC_KEY = 'Escape';
 
-  var usersCount = 25;
+  var USERS_COUNT = 25;
 
   var editor = document.querySelector('.img-upload__overlay');
 
@@ -27,6 +27,7 @@
     commentTextarea: commentTextarea,
     generateNumberFromTo: generateNumberFromTo,
     generateNumberArray: generateNumberArray,
-    usersCount: usersCount,
+    USERS_COUNT: USERS_COUNT,
+    pictures: []
   };
 })();

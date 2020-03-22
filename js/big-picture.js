@@ -4,8 +4,6 @@
   var ESC_KEY = window.utils.ESC_KEY;
   var MAX_BASE_COMMENTS = 5;
 
-  var usersCount = window.utils.usersCount;
-
   var bigPicture = document.querySelector('.big-picture');
   var closePictureButton = bigPicture.querySelector('#picture-cancel');
 
@@ -45,7 +43,7 @@
   var setEventOnPictures = function () {
     var pictures = document.querySelectorAll('.picture');
 
-    for (var i = 0; i < usersCount; i++) {
+    for (var i = 0; i < pictures.length; i++) {
       pictures[i].addEventListener('click', function (evt) {
         commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
@@ -54,7 +52,7 @@
         document.addEventListener('keydown', onPopupEscPress);
 
         var index = evt.target.parentElement.getAttribute('data-index');
-        var picturesIndex = window.data.pictures[index];
+        var picturesIndex = window.utils.pictures[index];
         comments = picturesIndex.comments;
 
         if (comments.length <= MAX_BASE_COMMENTS) {
